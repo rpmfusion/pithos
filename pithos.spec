@@ -1,6 +1,6 @@
 Name:           pithos
 Version:        0.3.18
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        A Pandora client for the GNOME Desktop
 
 Group:          Applications/File
@@ -10,8 +10,9 @@ Source0:        https://github.com/pithos/pithos/archive/%{version}.tar.gz#/%{na
 Patch0:         https://github.com/pithos/pithos/commit/df24f173c7dde3a1b3631b50366757ba5853a3ea.patch#/pithos-buffer.patch
 
 BuildArch:      noarch
-BuildRequires:  python2-devel python-setuptools desktop-file-utils
+BuildRequires:  python2-devel desktop-file-utils
 
+Requires:       python-setuptools
 Requires:       dbus-python
 Requires:       gstreamer-plugins-bad
 Requires:       gstreamer-plugins-good
@@ -54,6 +55,9 @@ update-desktop-database &> /dev/null || :
 %{_datadir}/icons/hicolor/scalable/apps/
 
 %changelog
+* Fri Apr 18 2014 TingPing <tingping@tingping.se> - 0.3.18-2
+- Fix dependency issue
+
 * Thu Mar 27 2014 TingPing <tingping@tingping.se> - 0.3.18-1
 - Initial package
 
