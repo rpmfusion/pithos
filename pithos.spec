@@ -10,7 +10,7 @@ Source0:        https://github.com/pithos/pithos/archive/%{version}.tar.gz#/%{na
 Patch0:         https://github.com/pithos/pithos/commit/df24f173c7dde3a1b3631b50366757ba5853a3ea.patch#/pithos-buffer.patch
 
 BuildArch:      noarch
-BuildRequires:  python2-devel desktop-file-utils
+BuildRequires:  python2-devel python-setuptools desktop-file-utils
 
 Requires:       python-setuptools
 Requires:       dbus-python
