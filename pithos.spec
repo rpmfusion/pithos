@@ -1,28 +1,26 @@
 Name:           pithos
-Version:        0.3.18
-Release:        2%{?dist}
+Version:        1.0.0
+Release:        1%{?dist}
 Summary:        A Pandora client for the GNOME Desktop
 
 Group:          Applications/File
 License:        GPLv3
 URL:            http://pithos.github.io/
 Source0:        https://github.com/pithos/pithos/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
-Patch0:         https://github.com/pithos/pithos/commit/df24f173c7dde3a1b3631b50366757ba5853a3ea.patch#/pithos-buffer.patch
+Patch0:         pithos-pylast.patch
 
 BuildArch:      noarch
-BuildRequires:  python2-devel python-setuptools desktop-file-utils
+BuildRequires:  python3-devel python3-setuptools desktop-file-utils
 
-Requires:       python-setuptools
-Requires:       dbus-python
-Requires:       gstreamer-plugins-bad
-Requires:       gstreamer-plugins-good
-Requires:       gstreamer-python
-Requires:       notify-python
-Requires:       python-keybinder
-Requires:       pygobject2
-Requires:       pygtk2
+Requires:       python3-setuptools
+Requires:       gstreamer1-plugins-good
+Requires:       gstreamer1-plugins-ugly
+Requires:       gstreamer1-plugins-bad-freeworld
+Requires:       libnotify keybinder3 gtk3
+Requires:       python3-dbus
+Requires:       python3-gobject
 Requires:       pylast
-Requires:       pyxdg
+Requires:       python3-pyxdg
 Requires:       hicolor-icon-theme
 
 %description
@@ -36,7 +34,14 @@ things like media key support and song notifications.
 %patch0 -p1
 
 %install
-%{__python2} setup.py install --root=%{buildroot}
+%{__python3} setup.py install --root=%{buildroot}
+
+# Remove Unity specific icons
+rm -rf %{buildroot}%{_datadir}/icons/ubuntu*
+
+# Terrible workaround for no python3 pylast package 
+# (it is the same file for py2 and py3 upstream)
+ln -s %{python2_sitelib}/pylast.py %{buildroot}%{python3_sitelib}/%{name}/pylast.py
 
 %post
 gtk-update-icon-cache %{_datadir}/icons/hicolor &> /dev/null || :
@@ -49,12 +54,15 @@ update-desktop-database &> /dev/null || :
 %files
 %doc README.md
 %{_bindir}/%{name}
-%{python_sitelib}/%{name}/
-%{python_sitelib}/%{name}-*.egg-info/
+%{python3_sitelib}/%{name}/
+%{python3_sitelib}/%{name}-*.egg-info/
 %{_datadir}/applications/%{name}.desktop
-%{_datadir}/icons/hicolor/scalable/apps/
+%{_datadir}/icons/hicolor/
 
 %changelog
+* Sat Jun 7 2014 TingPing <tingping@tingping.se> - 1.0.0-1
+- Bump version to 1.0.0
+
 * Fri Apr 18 2014 TingPing <tingping@tingping.se> - 0.3.18-2
 - Fix dependency issue
 
