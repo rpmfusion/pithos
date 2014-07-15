@@ -1,6 +1,6 @@
 Name:           pithos
 Version:        1.0.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        A Pandora client for the GNOME Desktop
 
 Group:          Applications/File
@@ -41,7 +41,7 @@ rm -rf %{buildroot}%{_datadir}/icons/ubuntu*
 
 # Terrible workaround for no python3 pylast package 
 # (it is the same file for py2 and py3 upstream)
-ln -s %{python2_sitelib}/pylast.py %{buildroot}%{python3_sitelib}/%{name}/pylast.py
+ln -s %{python_sitelib}/pylast.py %{buildroot}%{python3_sitelib}/%{name}/pylast.py
 
 %post
 gtk-update-icon-cache %{_datadir}/icons/hicolor &> /dev/null || :
@@ -60,6 +60,9 @@ update-desktop-database &> /dev/null || :
 %{_datadir}/icons/hicolor/
 
 %changelog
+* Sat Jun 21 2014 TingPing <tingping@tingping.se> - 1.0.0-2
+- Fix python2 sitelib macro
+
 * Sat Jun 7 2014 TingPing <tingping@tingping.se> - 1.0.0-1
 - Bump version to 1.0.0
 
