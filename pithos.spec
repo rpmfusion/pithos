@@ -1,6 +1,6 @@
 Name:           pithos
 Version:        1.0.0
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        A Pandora client for the GNOME Desktop
 
 Group:          Applications/File
@@ -11,6 +11,7 @@ Patch0:         pithos-pylast.patch
 
 BuildArch:      noarch
 BuildRequires:  python3-devel python3-setuptools desktop-file-utils
+BuildRequires:  python2-devel
 
 Requires:       python3-setuptools
 Requires:       gstreamer1-plugins-good
@@ -60,6 +61,9 @@ update-desktop-database &> /dev/null || :
 %{_datadir}/icons/hicolor/
 
 %changelog
+* Fri Jul 18 2014 TingPing <tingping@tingping.se> - 1.0.0-3
+- Fix python2 sitelib macro
+
 * Sat Jun 21 2014 TingPing <tingping@tingping.se> - 1.0.0-2
 - Fix python2 sitelib macro
 
