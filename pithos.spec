@@ -1,6 +1,6 @@
 Name:           pithos
-Version:        1.0.0
-Release:        3%{?dist}
+Version:        1.0.1
+Release:        1%{?dist}
 Summary:        A Pandora client for the GNOME Desktop
 
 Group:          Applications/File
@@ -58,9 +58,13 @@ update-desktop-database &> /dev/null || :
 %{python3_sitelib}/%{name}/
 %{python3_sitelib}/%{name}-*.egg-info/
 %{_datadir}/applications/%{name}.desktop
+%{_datadir}/appdata/%{name}.appdata.xml
 %{_datadir}/icons/hicolor/
 
 %changelog
+* Sun Sep 21 2014 TingPing <tingping@tingping.se> - 1.0.1-1
+- Bump version to 1.0.1
+
 * Fri Jul 18 2014 TingPing <tingping@tingping.se> - 1.0.0-3
 - Fix python2 sitelib macro
 
