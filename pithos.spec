@@ -1,6 +1,6 @@
 Name:           pithos
 Version:        1.0.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        A Pandora client for the GNOME Desktop
 
 Group:          Applications/File
@@ -62,6 +62,9 @@ update-desktop-database &> /dev/null || :
 %{_datadir}/icons/hicolor/
 
 %changelog
+* Mon Jan 5 2015 TingPing <tingping@tingping.se> - 1.0.1-2
+- Fix importing pylast
+
 * Sun Sep 21 2014 TingPing <tingping@tingping.se> - 1.0.1-1
 - Bump version to 1.0.1
 

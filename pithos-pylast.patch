@@ -6,7 +6,7 @@ diff -ur pithos-1.0.0.orig/pithos/plugins/scrobble.py pithos-1.0.0/pithos/plugin
  ### END LICENSE
  
 -import pylast
-+import pithos.pylast
++import pithos.pylast as pylast
  import logging
  from pithos.gobject_worker import GObjectWorker
  from pithos.plugin import PithosPlugin
