@@ -1,17 +1,15 @@
 Name:           pithos
-Version:        1.0.1
-Release:        2%{?dist}
+Version:        1.1.0
+Release:        1%{?dist}
 Summary:        A Pandora client for the GNOME Desktop
 
 Group:          Applications/File
 License:        GPLv3
 URL:            http://pithos.github.io/
 Source0:        https://github.com/pithos/pithos/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
-Patch0:         pithos-pylast.patch
 
 BuildArch:      noarch
 BuildRequires:  python3-devel python3-setuptools desktop-file-utils
-BuildRequires:  python2-devel
 
 Requires:       python3-setuptools
 Requires:       gstreamer1-plugins-good
@@ -20,8 +18,6 @@ Requires:       gstreamer1-plugins-bad-freeworld
 Requires:       libnotify keybinder3 gtk3
 Requires:       python3-dbus
 Requires:       python3-gobject
-Requires:       pylast
-Requires:       python3-pyxdg
 Requires:       hicolor-icon-theme
 
 %description
@@ -32,17 +28,12 @@ things like media key support and song notifications.
 
 %prep
 %setup -q
-%patch0 -p1
 
 %install
 %{__python3} setup.py install --root=%{buildroot}
 
 # Remove Unity specific icons
 rm -rf %{buildroot}%{_datadir}/icons/ubuntu*
-
-# Terrible workaround for no python3 pylast package 
-# (it is the same file for py2 and py3 upstream)
-ln -s %{python_sitelib}/pylast.py %{buildroot}%{python3_sitelib}/%{name}/pylast.py
 
 %post
 gtk-update-icon-cache %{_datadir}/icons/hicolor &> /dev/null || :
@@ -54,6 +45,7 @@ update-desktop-database &> /dev/null || :
 
 %files
 %doc README.md
+%license license
 %{_bindir}/%{name}
 %{python3_sitelib}/%{name}/
 %{python3_sitelib}/%{name}-*.egg-info/
@@ -62,6 +54,9 @@ update-desktop-database &> /dev/null || :
 %{_datadir}/icons/hicolor/
 
 %changelog
+* Sun May 10 2015 TingPing <tingping@tingping.se> - 1.1.0-1
+- Bump version to 1.1.0
+
 * Mon Jan 5 2015 TingPing <tingping@tingping.se> - 1.0.1-2
 - Fix importing pylast
 
