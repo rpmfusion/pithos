@@ -1,24 +1,34 @@
+%global appid io.github.Pithos
+
 Name:           pithos
-Version:        1.1.2
+Version:        1.2.0
 Release:        1%{?dist}
 Summary:        A Pandora client for the GNOME Desktop
 
-Group:          Applications/File
+Group:          Applications/Multimedia
 License:        GPLv3
-URL:            http://pithos.github.io/
-Source0:        https://github.com/pithos/pithos/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
+URL:            https://pithos.github.io/
+Source0:        https://github.com/pithos/pithos/releases/download/%{version}/pithos-%{version}.tar.xz
 
 BuildArch:      noarch
-BuildRequires:  python3-devel python3-setuptools desktop-file-utils
+BuildRequires:  python3-devel >= 3.4
+BuildRequires:  intltool
 
-Requires:       python3-setuptools
-Requires:       gstreamer1-plugins-good
-Requires:       gstreamer1-plugins-ugly
-Requires:       gstreamer1-plugins-bad-freeworld
-Requires:       libnotify keybinder3 gtk3
-Requires:       python3-dbus
-Requires:       python3-gobject
+Requires:       gtk3 libsecret
+Requires:       python3-gobject python3-cairo
 Requires:       hicolor-icon-theme
+# HTTP support
+Requires:       gstreamer1-plugins-good
+# Bad provides aacplus and Ugly provides mp3 or ffmpeg provides both
+Requires:       ((gstreamer1-plugins-ugly and gstreamer1-plugins-bad-freeworld) or gstreamer1-libav)
+# Last.fm plugin
+Recommends:     python3-pylast
+# Keybinder plugin on DEs other than Gnome/Mate
+Recommends:     keybinder3
+# Notify plugin
+Recommends:     libnotify
+# Notification Icon plugin on some DEs
+Suggests:       libappindicator-gtk
 
 %description
 Pithos is a Pandora client for the GNOME Desktop. The official Flash-based
@@ -27,33 +37,38 @@ but is command-line only. Neither integrate with the desktop very well, missing
 things like media key support and song notifications.
 
 %prep
-%setup -q
+%autosetup
 
 %install
-%{__python3} setup.py install --root=%{buildroot}
+%configure
+%make_install
 
 # Remove Unity specific icons
 rm -rf %{buildroot}%{_datadir}/icons/ubuntu*
 
 %post
+glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 gtk-update-icon-cache %{_datadir}/icons/hicolor &> /dev/null || :
-update-desktop-database &> /dev/null || :
 
 %postun
+glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 gtk-update-icon-cache %{_datadir}/icons/hicolor &> /dev/null || :
-update-desktop-database &> /dev/null || :
 
 %files
 %doc README.md
 %license license
 %{_bindir}/%{name}
 %{python3_sitelib}/%{name}/
-%{python3_sitelib}/%{name}-*.egg-info/
-%{_datadir}/applications/%{name}.desktop
-%{_datadir}/appdata/%{name}.appdata.xml
+%{_datadir}/%{name}/%{name}.gresource
+%{_datadir}/applications/%{appid}.desktop
+%{_datadir}/appdata/%{appid}.appdata.xml
+%{_datadir}/glib-2.0/schemas/%{appid}.gschema.xml
 %{_datadir}/icons/hicolor/
 
 %changelog
+* Wed Jul 27 2016 Patrick Griffis <tingping@tingping.se> - 1.2.0-1
+- Bump version to 1.2.0
+
 * Mon Nov 23 2015 TingPing <tingping@tingping.se> - 1.1.2-1
 - Bump version to 1.1.2
 
