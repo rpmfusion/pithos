@@ -13,6 +13,7 @@ Source0:        https://github.com/pithos/pithos/releases/download/%{version}/pi
 BuildArch:      noarch
 BuildRequires:  python3-devel >= 3.4
 BuildRequires:  intltool
+BuildRequires:  glib2
 
 Requires:       gtk3 libsecret
 Requires:       python3-gobject python3-cairo
