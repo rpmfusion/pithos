@@ -1,7 +1,7 @@
 %global appid io.github.Pithos
 
 Name:           pithos
-Version:        1.2.0
+Version:        1.2.1
 Release:        1%{?dist}
 Summary:        A Pandora client for the GNOME Desktop
 
@@ -67,6 +67,9 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &> /dev/null || :
 %{_datadir}/icons/hicolor/
 
 %changelog
+* Sun Jul 31 2016 Patrick Griffis <tingping@tingping.se> - 1.2.1-1
+- Bump version to 1.2.1
+
 * Wed Jul 27 2016 Patrick Griffis <tingping@tingping.se> - 1.2.0-1
 - Bump version to 1.2.0
 
