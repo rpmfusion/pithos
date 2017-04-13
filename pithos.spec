@@ -64,7 +64,8 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &> /dev/null || :
 %{_datadir}/applications/%{appid}.desktop
 %{_datadir}/appdata/%{appid}.appdata.xml
 %{_datadir}/glib-2.0/schemas/%{appid}.gschema.xml
-%{_datadir}/icons/hicolor/
+%{_datadir}/icons/hicolor/*/apps/*.png
+%{_datadir}/icons/hicolor/scalable/apps/*.svg
 
 %changelog
 * Mon Mar 20 2017 RPM Fusion Release Engineering <kwizart@rpmfusion.org>
