@@ -1,18 +1,21 @@
 %global appid io.github.Pithos
 
 Name:           pithos
-Version:        1.2.1
-Release:        2%{?dist}
+Version:        1.3.0
+Release:        1%{?dist}
 Summary:        A Pandora client for the GNOME Desktop
 
 Group:          Applications/Multimedia
 License:        GPLv3
 URL:            https://pithos.github.io/
 Source0:        https://github.com/pithos/pithos/releases/download/%{version}/pithos-%{version}.tar.xz
+Patch0:         https://github.com/pithos/pithos/commit/be9e8cb35692ef0b7d835dc26b28996cf6aacb7b.patch
+Patch1:         https://github.com/pithos/pithos/commit/8656c60e9663148166c8bd2cfd910a4423b2588d.patch
+
 
 BuildArch:      noarch
 BuildRequires:  python3-devel >= 3.4
-BuildRequires:  intltool
+BuildRequires:  intltool libappstream-glib
 BuildRequires:  glib2-devel gdk-pixbuf2-devel
 
 Requires:       gtk3 libsecret
@@ -38,7 +41,7 @@ but is command-line only. Neither integrate with the desktop very well, missing
 things like media key support and song notifications.
 
 %prep
-%autosetup
+%autosetup -p1
 
 %install
 %configure
@@ -46,6 +49,9 @@ things like media key support and song notifications.
 
 # Remove Unity specific icons
 rm -rf %{buildroot}%{_datadir}/icons/ubuntu*
+
+%check
+appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/appdata/*.appdata.xml
 
 %post
 glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
@@ -66,8 +72,14 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &> /dev/null || :
 %{_datadir}/glib-2.0/schemas/%{appid}.gschema.xml
 %{_datadir}/icons/hicolor/*/apps/*.png
 %{_datadir}/icons/hicolor/scalable/apps/*.svg
+%{_datadir}/icons/hicolor/symbolic/apps/*.svg
+%{_mandir}/man1/*.gz
 
 %changelog
+* Thu Apr 13 2017 Patrick Griffis <tingping@tingping.se> - 1.3.0-1
+- Bump version to 1.3.0
+- Fix directory ownership
+
 * Mon Mar 20 2017 RPM Fusion Release Engineering <kwizart@rpmfusion.org>
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
 
