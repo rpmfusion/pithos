@@ -2,7 +2,7 @@
 
 Name:           pithos
 Version:        1.3.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        A Pandora client for the GNOME Desktop
 
 Group:          Applications/Multimedia
@@ -74,6 +74,9 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &> /dev/null || :
 %{_mandir}/man1/*.gz
 
 %changelog
+* Thu Aug 31 2017 RPM Fusion Release Engineering <kwizart@rpmfusion.org> - 1.3.1-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Mass_Rebuild
+
 * Fri Apr 21 2017 Patrick Griffis <tingping@tingping.se> - 1.3.1-1
 - Bump version to 1.3.1
 
