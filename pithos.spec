@@ -16,7 +16,7 @@ Source0:        https://github.com/pithos/pithos/releases/download/%{version}/pi
 BuildArch:      noarch
 BuildRequires:  python3-devel >= 3.4
 BuildRequires:  meson >= 0.40.0
-BuildRequires:  glib2-devel gdk-pixbuf2-devel libappstream-glib
+BuildRequires:  glib2-devel gdk-pixbuf2-devel libappstream-glib gettext
 
 Requires:       gtk3 libsecret
 Requires:       python3-gobject python3-cairo
