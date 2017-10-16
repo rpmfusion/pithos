@@ -1,8 +1,10 @@
+# brp-python-bytecompile is ran with python2 by default
+%global __python %{__python3}
 %global appid io.github.Pithos
 
 Name:           pithos
-Version:        1.3.1
-Release:        2%{?dist}
+Version:        1.4.0
+Release:        1%{?dist}
 Summary:        A Pandora client for the GNOME Desktop
 
 Group:          Applications/Multimedia
@@ -13,8 +15,8 @@ Source0:        https://github.com/pithos/pithos/releases/download/%{version}/pi
 
 BuildArch:      noarch
 BuildRequires:  python3-devel >= 3.4
-BuildRequires:  intltool libappstream-glib
-BuildRequires:  glib2-devel gdk-pixbuf2-devel
+BuildRequires:  meson >= 0.40.0
+BuildRequires:  glib2-devel gdk-pixbuf2-devel libappstream-glib gettext
 
 Requires:       gtk3 libsecret
 Requires:       python3-gobject python3-cairo
@@ -27,8 +29,6 @@ Requires:       ((gstreamer1-plugins-ugly and gstreamer1-plugins-bad-freeworld) 
 Recommends:     python3-pylast
 # Keybinder plugin on DEs other than Gnome/Mate
 Recommends:     keybinder3
-# Notify plugin
-Recommends:     libnotify
 # Notification Icon plugin on some DEs
 Suggests:       libappindicator-gtk
 
@@ -41,9 +41,13 @@ things like media key support and song notifications.
 %prep
 %autosetup -p1
 
+# brp-python-bytecompile always runs (probably because we install to datadir)
+# so lets just not do it twice...
+/usr/bin/sed -e 's/^compile_dir.*$//' -i meson_post_install.py
+
 %install
-%configure
-%make_install
+%meson
+%meson_install
 
 # Remove Unity specific icons
 rm -rf %{buildroot}%{_datadir}/icons/ubuntu*
@@ -52,28 +56,34 @@ rm -rf %{buildroot}%{_datadir}/icons/ubuntu*
 appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/appdata/*.appdata.xml
 
 %post
-glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
-gtk-update-icon-cache %{_datadir}/icons/hicolor &> /dev/null || :
+/bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
 
 %postun
-glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
-gtk-update-icon-cache %{_datadir}/icons/hicolor &> /dev/null || :
+if [ $1 -eq 0 ] ; then
+    /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null
+    /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
+fi
+
+%posttrans
+/usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 %files
 %doc README.md
 %license license
 %{_bindir}/%{name}
-%{python3_sitelib}/%{name}/
-%{_datadir}/%{name}/%{name}.gresource
+%{_datadir}/%{name}/
 %{_datadir}/applications/%{appid}.desktop
 %{_datadir}/appdata/%{appid}.appdata.xml
 %{_datadir}/glib-2.0/schemas/%{appid}.gschema.xml
-%{_datadir}/icons/hicolor/*/apps/*.png
-%{_datadir}/icons/hicolor/scalable/apps/*.svg
-%{_datadir}/icons/hicolor/symbolic/apps/*.svg
-%{_mandir}/man1/*.gz
+%{_datadir}/icons/hicolor/*/apps/%{appid}*.png
+%{_datadir}/icons/hicolor/scalable/apps/%{appid}*.svg
+%{_datadir}/icons/hicolor/symbolic/apps/%{appid}*.svg
+%{_mandir}/man1/%{name}.1.gz
 
 %changelog
+* Sun Oct 15 2017 Patrick Griffis <tingping@tingping.se> - 1.4.0-1
+- Bump version to 1.4.0
+
 * Thu Aug 31 2017 RPM Fusion Release Engineering <kwizart@rpmfusion.org> - 1.3.1-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Mass_Rebuild
 
@@ -122,4 +132,3 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &> /dev/null || :
 
 * Thu Mar 27 2014 TingPing <tingping@tingping.se> - 0.3.18-1
 - Initial package
-
