@@ -3,7 +3,7 @@
 %global appid io.github.Pithos
 
 Name:           pithos
-Version:        1.4.0
+Version:        1.4.1
 Release:        1%{?dist}
 Summary:        A Pandora client for the GNOME Desktop
 
@@ -23,8 +23,10 @@ Requires:       python3-gobject python3-cairo
 Requires:       hicolor-icon-theme
 # HTTP support
 Requires:       gstreamer1-plugins-good
-# Bad provides aacplus and Ugly provides mp3 or ffmpeg provides both
-Requires:       ((gstreamer1-plugins-ugly and gstreamer1-plugins-bad-freeworld) or gstreamer1-libav)
+# MP3
+Requires:       gstreamer1-plugin-mpg123
+# AACPlus (faad)
+Requires:       gstreamer1-plugins-bad-freeworld
 # Last.fm plugin
 Recommends:     python3-pylast
 # Keybinder plugin on DEs other than Gnome/Mate
@@ -74,6 +76,7 @@ fi
 %{_datadir}/%{name}/
 %{_datadir}/applications/%{appid}.desktop
 %{_datadir}/appdata/%{appid}.appdata.xml
+%{_datadir}/dbus-1/services/%{appid}.service
 %{_datadir}/glib-2.0/schemas/%{appid}.gschema.xml
 %{_datadir}/icons/hicolor/*/apps/%{appid}*.png
 %{_datadir}/icons/hicolor/scalable/apps/%{appid}*.svg
@@ -81,6 +84,9 @@ fi
 %{_mandir}/man1/%{name}.1.gz
 
 %changelog
+* Sun Nov 26 2017 Patrick Griffis <tingping@tingping.se> - 1.4.1-1
+- Bump version to 1.4.1
+
 * Sun Oct 15 2017 Patrick Griffis <tingping@tingping.se> - 1.4.0-1
 - Bump version to 1.4.0
 
