@@ -35,10 +35,11 @@ Recommends:     keybinder3
 Suggests:       libappindicator-gtk
 
 %description
-Pithos is a Pandora client for the GNOME Desktop. The official Flash-based
-client is a CPU hog, and Pianobar is a great reverse-engineered implementation,
-but is command-line only. Neither integrate with the desktop very well, missing
-things like media key support and song notifications.
+Pithos is a easy to use native Pandora Radio client that is more lightweight
+than the pandora.com web client and integrates with the desktop.
+It supports most functionality of pandora.com such as rating songs,
+creating/managing stations, quickmix, etc. On top of that it has features such
+as last.fm scrobbling, media keys, notifications, proxies, and mpris support.
 
 %prep
 %autosetup -p1
