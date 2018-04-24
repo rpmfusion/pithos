@@ -4,7 +4,7 @@
 
 Name:           pithos
 Version:        1.4.1
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        A Pandora client for the GNOME Desktop
 
 Group:          Applications/Multimedia
@@ -16,10 +16,15 @@ Source0:        https://github.com/pithos/pithos/releases/download/%{version}/pi
 BuildArch:      noarch
 BuildRequires:  python3-devel >= 3.4
 BuildRequires:  meson >= 0.40.0
-BuildRequires:  glib2-devel gdk-pixbuf2-devel libappstream-glib gettext
+BuildRequires:  glib2-devel
+BuildRequires:  gdk-pixbuf2-devel
+BuildRequires:  libappstream-glib
+BuildRequires:  gettext
 
-Requires:       gtk3 libsecret
-Requires:       python3-gobject python3-cairo
+Requires:       gtk3
+Requires:       libsecret
+Requires:       python3-gobject-base
+Requires:       python3-cairo
 Requires:       hicolor-icon-theme
 # HTTP support
 Requires:       gstreamer1-plugins-good
@@ -58,18 +63,6 @@ rm -rf %{buildroot}%{_datadir}/icons/ubuntu*
 %check
 appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/appdata/*.appdata.xml
 
-%post
-/bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
-
-%postun
-if [ $1 -eq 0 ] ; then
-    /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null
-    /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
-fi
-
-%posttrans
-/usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
-
 %files
 %doc README.md
 %license license
@@ -85,6 +78,11 @@ fi
 %{_mandir}/man1/%{name}.1.gz
 
 %changelog
+* Tue Apr 24 2018 Leigh Scott <leigh123linux@googlemail.com> - 1.4.1-3
+- Fix missing requires (rfbz#4854)
+- Remove obsolete scriptlets
+- Cleanup spec file
+
 * Thu Mar 01 2018 RPM Fusion Release Engineering <leigh123linux@googlemail.com> - 1.4.1-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
 
