@@ -4,7 +4,7 @@
 
 Name:           pithos
 Version:        1.4.1
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        A Pandora client for the GNOME Desktop
 
 Group:          Applications/Multimedia
@@ -78,6 +78,9 @@ appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/appdata/*.appdata
 %{_mandir}/man1/%{name}.1.gz
 
 %changelog
+* Tue Jul 10 2018 Miro Hrončok <mhroncok@redhat.com> - 1.4.1-4
+- Rebuilt for Python 3.7
+
 * Tue Apr 24 2018 Leigh Scott <leigh123linux@googlemail.com> - 1.4.1-3
 - Fix missing requires (rfbz#4854)
 - Remove obsolete scriptlets
