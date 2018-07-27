@@ -4,7 +4,7 @@
 
 Name:           pithos
 Version:        1.4.1
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        A Pandora client for the GNOME Desktop
 
 Group:          Applications/Multimedia
@@ -78,6 +78,9 @@ appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/appdata/*.appdata
 %{_mandir}/man1/%{name}.1.gz
 
 %changelog
+* Fri Jul 27 2018 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 1.4.1-5
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
+
 * Tue Jul 10 2018 Miro Hrončok <mhroncok@redhat.com> - 1.4.1-4
 - Rebuilt for Python 3.7
 
