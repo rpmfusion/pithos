@@ -3,17 +3,18 @@
 %global appid io.github.Pithos
 
 Name:           pithos
-Version:        1.4.1
-Release:        11%{?dist}
+Version:        1.5.1
+Release:        1%{?dist}
 Summary:        A Pandora client for the GNOME Desktop
 
-Group:          Applications/Multimedia
 License:        GPLv3
 URL:            https://pithos.github.io/
 Source0:        https://github.com/pithos/pithos/releases/download/%{version}/pithos-%{version}.tar.xz
 
 
 BuildArch:      noarch
+
+BuildRequires:  desktop-file-utils
 BuildRequires:  python3-devel >= 3.4
 BuildRequires:  meson >= 0.40.0
 BuildRequires:  glib2-devel
@@ -53,15 +54,19 @@ as last.fm scrobbling, media keys, notifications, proxies, and mpris support.
 # so lets just not do it twice...
 /usr/bin/sed -e 's/^compile_dir.*$//' -i meson_post_install.py
 
-%install
+%build
 %meson
+%meson_build
+
+%install
 %meson_install
 
 # Remove Unity specific icons
 rm -rf %{buildroot}%{_datadir}/icons/ubuntu*
 
 %check
-appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/appdata/*.appdata.xml
+appstream-util validate-relax --nonet %{buildroot}/%{_metainfodir}/%{appid}.appdata.xml
+desktop-file-validate %{buildroot}/%{_datadir}/applications/%{appid}.desktop
 
 %files
 %doc README.md
@@ -69,15 +74,17 @@ appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/appdata/*.appdata
 %{_bindir}/%{name}
 %{_datadir}/%{name}/
 %{_datadir}/applications/%{appid}.desktop
-%{_datadir}/appdata/%{appid}.appdata.xml
+%{_metainfodir}/%{appid}.appdata.xml
 %{_datadir}/dbus-1/services/%{appid}.service
 %{_datadir}/glib-2.0/schemas/%{appid}.gschema.xml
 %{_datadir}/icons/hicolor/*/apps/%{appid}*.png
-%{_datadir}/icons/hicolor/scalable/apps/%{appid}*.svg
-%{_datadir}/icons/hicolor/symbolic/apps/%{appid}*.svg
-%{_mandir}/man1/%{name}.1.gz
+%{_datadir}/icons/hicolor/*/apps/%{appid}*.svg
+%{_mandir}/man1/%{name}.1.*
 
 %changelog
+* Wed Feb 03 2021 Leigh Scott <leigh123linux@gmail.com> - 1.5.1-1
+- Bump version to 1.5.1
+
 * Wed Feb 03 2021 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 1.4.1-11
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
 
