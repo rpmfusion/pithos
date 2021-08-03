@@ -4,7 +4,7 @@
 
 Name:           pithos
 Version:        1.5.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        A Pandora client for the GNOME Desktop
 
 License:        GPLv3
@@ -82,6 +82,9 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/%{appid}.desktop
 %{_mandir}/man1/%{name}.1.*
 
 %changelog
+* Tue Aug 03 2021 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 1.5.1-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_35_Mass_Rebuild
+
 * Wed Feb 03 2021 Leigh Scott <leigh123linux@gmail.com> - 1.5.1-1
 - Bump version to 1.5.1
 
