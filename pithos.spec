@@ -3,13 +3,14 @@
 %global appid io.github.Pithos
 
 Name:           pithos
-Version:        1.5.1
-Release:        4%{?dist}
+Version:        1.6.0
+Release:        1%{?dist}
 Summary:        A Pandora client for the GNOME Desktop
 
 License:        GPLv3
 URL:            https://pithos.github.io/
 Source0:        https://github.com/pithos/pithos/releases/download/%{version}/pithos-%{version}.tar.xz
+Patch0:         Fix_dbus_python.patch
 
 
 BuildArch:      noarch
@@ -50,10 +51,6 @@ as last.fm scrobbling, media keys, notifications, proxies, and mpris support.
 %prep
 %autosetup -p1
 
-# brp-python-bytecompile always runs (probably because we install to datadir)
-# so lets just not do it twice...
-/usr/bin/sed -e 's/^compile_dir.*$//' -i meson_post_install.py
-
 %build
 %meson
 %meson_build
@@ -82,6 +79,10 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/%{appid}.desktop
 %{_mandir}/man1/%{name}.1.*
 
 %changelog
+* Tue Oct 04 2022 Leigh Scott <leigh123linux@gmail.com> - 1.6.0-1
+- Bump version to 1.6.0
+- Fix byte compile
+
 * Sun Aug 07 2022 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 1.5.1-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_37_Mass_Rebuild and ffmpeg
   5.1
