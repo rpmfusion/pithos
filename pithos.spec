@@ -3,14 +3,13 @@
 %global appid io.github.Pithos
 
 Name:           pithos
-Version:        1.6.0
-Release:        3%{?dist}
+Version:        1.6.2
+Release:        1%{?dist}
 Summary:        A Pandora client for the GNOME Desktop
 
 License:        GPLv3
 URL:            https://pithos.github.io/
-Source0:        https://github.com/pithos/pithos/releases/download/%{version}/pithos-%{version}.tar.xz
-Patch0:         Fix_dbus_python.patch
+Source0:        https://github.com/pithos/pithos/archive/%{version}/pithos-%{version}.tar.gz
 
 
 BuildArch:      noarch
@@ -79,6 +78,9 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/%{appid}.desktop
 %{_mandir}/man1/%{name}.1.*
 
 %changelog
+* Sun Apr 07 2024 Leigh Scott <leigh123linux@gmail.com> - 1.6.2-1
+- Bump version to 1.6.2
+
 * Sun Feb 04 2024 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 1.6.0-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_40_Mass_Rebuild
 
