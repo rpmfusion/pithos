@@ -4,7 +4,7 @@
 
 Name:           pithos
 Version:        1.6.2
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        A Pandora client for the GNOME Desktop
 
 License:        GPLv3
@@ -78,6 +78,9 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/%{appid}.desktop
 %{_mandir}/man1/%{name}.1.*
 
 %changelog
+* Sun Jul 27 2025 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 1.6.2-4
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_43_Mass_Rebuild
+
 * Tue Jan 28 2025 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 1.6.2-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_42_Mass_Rebuild
 
